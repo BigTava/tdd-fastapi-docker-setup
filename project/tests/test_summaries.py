@@ -10,6 +10,7 @@ def test_create_summary(test_app_with_db):
 
     assert response.status_code == 201
     assert response.json()["url"] == "https://foo.bar"
+    print(response.json()["id"])
 
 
 def test_create_summaries_invalid_json(test_app):

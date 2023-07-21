@@ -13,11 +13,12 @@ def get_settings_override():
     return Settings(testing=1, database_url=os.environ.get("DATABASE_TEST_URL"))
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def test_app():
     # set up
     app = create_application()
     app.dependency_overrides[get_settings] = get_settings_override
+
     with TestClient(app) as test_client:
 
         # testing
@@ -29,6 +30,7 @@ def test_app_with_db():
     # set up
     app = create_application()
     app.dependency_overrides[get_settings] = get_settings_override
+
     register_tortoise(
         app,
         db_url=os.environ.get("DATABASE_TEST_URL"),
